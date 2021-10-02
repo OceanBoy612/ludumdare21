@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Circle3.png-ee456ba1d23fd0b13c6b590dbf92850f.stex"
+path="res://.import/Lid.png-d41fbb9f8845815e6d34c9be0075a218.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Circle3.png"
-dest_files=[ "res://.import/Circle3.png-ee456ba1d23fd0b13c6b590dbf92850f.stex" ]
+source_file="res://Sprites/Player Sprites/Lid.png"
+dest_files=[ "res://.import/Lid.png-d41fbb9f8845815e6d34c9be0075a218.stex" ]
 
 [params]
 

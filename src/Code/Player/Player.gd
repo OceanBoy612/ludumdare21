@@ -8,6 +8,8 @@ signal jumped
 signal landed
 signal shot
 signal died
+signal health_changed
+signal charge_changed
 signal direction_changed
 
 
@@ -20,7 +22,7 @@ export(float, 0, 100, 1) var shoot_cost: float = 30
 export(float, 0, 1000, 25) var knockback_strength: float = 250
 export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
 export(float, 0, 1000, 25) var hurt_knockback_strength: float = 200
-export(float, 0, 20, 1) var health: float = 3
+export(float, 0, 20, 1) var max_health: float = 3
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -40,6 +42,13 @@ var was_on_floor = false
 var last_on_floor_time = 0
 var coyote_time_buffer = 100
 var charge = 0 setget _set_charge
+var health = 0 setget _set_health
+var is_dead = false
+
+
+func _ready():
+	_set_health(max_health)
+	_set_charge(0)
 
 
 func _physics_process(delta):
@@ -83,13 +92,23 @@ func jump():
 func hurt(amt:float, dir:Vector2):
 	if immortal:
 		return 
-	health -= amt
-	if health <= 0:
-		emit_signal("died")
+	_set_health(health - amt)
+	if health <= 0:	die()
+	else:			emit_signal("health_changed")
 	knockback += dir * hurt_knockback_strength
 	immortal = true
 	yield(get_tree().create_timer(0.2), "timeout")
 	immortal = false
+
+
+func die():
+	is_dead = true
+	set_physics_process(false)
+	set_process_input(false)
+	$Sprite.play("Die")
+	yield($Sprite, "animation_finished")
+	emit_signal("died")
+	queue_free()
 
 
 func _apply_knockback():
@@ -132,6 +151,12 @@ func _move_player() -> void:
 
 func _set_charge(v):
 	charge = clamp(v, 0, 100)
+	emit_signal("charge_changed")
+
+
+func _set_health(v):
+	health = clamp(v, 0, max_health)
+	emit_signal("health_changed")
 
 
 func _can_shoot() -> bool:

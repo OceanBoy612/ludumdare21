@@ -15,6 +15,7 @@ export(float, 0, 1, 0.025) var damping: float = 0.80
 export(float, 0, 1000, 10) var max_speed: float = 400.0
 export(float, 0, 200, 10) var gravity: float = 50.0
 export(float, 0, 2000, 25) var jump_strength: float = 300.0
+export(float, 0, 100, 1) var shoot_cost: float = 30
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -29,6 +30,7 @@ var jump_buffer_msecs = 100
 var last_shoot_time = 0
 var shoot_buffer_msecs = 100
 var was_on_floor = false
+var charge = 0 setget _set_charge
 
 
 func _physics_process(delta):
@@ -43,10 +45,12 @@ func _input(event):
 		last_jump_time = OS.get_system_time_msecs()
 	if event.is_action_pressed("shoot") and event.is_pressed():
 		last_shoot_time = OS.get_system_time_msecs()
-		shoot()
+		if _can_shoot():
+			shoot()
 		
 
 func shoot():
+	_set_charge(charge - shoot_cost)
 	var bul = bullet_tscn.instance()
 	bul.global_position = $aimer/offset.global_position
 	bul.global_rotation = $aimer.global_rotation
@@ -78,9 +82,19 @@ func _move_player() -> void:
 		jump()
 	
 	if move_dir.dot(vel) < 0: emit_signal("direction_changed")
-	if not move_dir.is_equal_approx(Vector2()): emit_signal("moved")
+	if not move_dir.is_equal_approx(Vector2()): 
+		_set_charge(charge + 1)
+		emit_signal("moved")
 	else: emit_signal("stopped")
 
+
+func _set_charge(v):
+	charge = clamp(v, 0, 100)
+
+
+func _can_shoot() -> bool:
+	return charge >= shoot_cost and _is_shoot_just_pressed()
+	
 
 func _can_jump() -> bool:
 	return is_on_floor() and _is_jump_just_pressed()

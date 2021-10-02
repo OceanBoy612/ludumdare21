@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Code/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Code/World/World.gd" type="Script" id=2]
 [ext_resource path="res://Code/World/GUI.gd" type="Script" id=3]
+[ext_resource path="res://Code/World/Camera2D.gd" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 581, 10 )
@@ -22,6 +23,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 192, 108 )
+current = true
+script = ExtResource( 4 )
+
 [node name="Floortemp" type="StaticBody2D" parent="."]
 position = Vector2( 180, 187 )
 
@@ -29,7 +35,8 @@ position = Vector2( 180, 187 )
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 86, 49 )
+position = Vector2( 86.8909, 49.4454 )
 max_speed = 170.0
 gravity = 30.0
 jump_strength = 500.0
+knockback_strength = 375.0

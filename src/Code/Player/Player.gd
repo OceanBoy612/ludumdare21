@@ -16,6 +16,8 @@ export(float, 0, 1000, 10) var max_speed: float = 400.0
 export(float, 0, 200, 10) var gravity: float = 50.0
 export(float, 0, 2000, 25) var jump_strength: float = 300.0
 export(float, 0, 100, 1) var shoot_cost: float = 30
+export(float, 0, 1000, 25) var knockback_strength: float = 250
+export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -24,6 +26,8 @@ onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
 var move_dir: Vector2 = Vector2()
 var look_dir: Vector2 = Vector2()
 var vel: Vector2 = Vector2()
+var knockback: Vector2 = Vector2()
+
 
 var last_jump_time = 0
 var jump_buffer_msecs = 100
@@ -37,6 +41,7 @@ func _physics_process(delta):
 	look_dir = _get_dir_to_mouse()
 	$aimer.rotation = look_dir.angle()
 	
+	_apply_knockback()
 	_move_player()
 
 
@@ -55,6 +60,10 @@ func shoot():
 	bul.global_position = $aimer/offset.global_position
 	bul.global_rotation = $aimer.global_rotation
 	get_parent().add_child(bul)
+	
+	# recoil
+	knockback += Vector2(-1,0).rotated(bul.global_rotation) * knockback_strength
+	
 	emit_signal("shot")
 
 
@@ -62,6 +71,11 @@ func jump():
 	vel.y = -jump_strength
 	last_jump_time = 0
 	emit_signal("jumped")
+
+
+func _apply_knockback():
+	move_and_slide(knockback)
+	knockback *= knockback_decay
 
 
 func _move_player() -> void:

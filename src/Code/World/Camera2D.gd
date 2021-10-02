@@ -39,7 +39,7 @@ func add_trauma(amount):
 
 
 func _process(delta):
-	if target:
+	if is_instance_valid(target):
 		global_position = get_node(target).global_position
 	if trauma:
 		trauma = max(trauma - decay * delta, 0)

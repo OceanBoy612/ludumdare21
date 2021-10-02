@@ -4,6 +4,9 @@ class_name Player
 
 signal moved
 signal stopped
+signal jumped
+signal landed
+signal shot
 signal direction_changed
 
 
@@ -25,6 +28,7 @@ var last_jump_time = 0
 var jump_buffer_msecs = 100
 var last_shoot_time = 0
 var shoot_buffer_msecs = 100
+var was_on_floor = false
 
 
 func _physics_process(delta):
@@ -47,6 +51,13 @@ func shoot():
 	bul.global_position = $aimer/offset.global_position
 	bul.global_rotation = $aimer.global_rotation
 	get_parent().add_child(bul)
+	emit_signal("shot")
+
+
+func jump():
+	vel.y = -jump_strength
+	last_jump_time = 0
+	emit_signal("jumped")
 
 
 func _move_player() -> void:
@@ -59,13 +70,20 @@ func _move_player() -> void:
 	vel = move_and_slide(vel, Vector2(0,-1))
 	vel.x *= damping
 	
-	if is_on_floor() and _is_jump_just_pressed():
-		vel.y = -jump_strength
-		last_jump_time = 0
+	if not was_on_floor and is_on_floor():
+		emit_signal("landed")
+	was_on_floor = is_on_floor()
+	
+	if _can_jump():
+		jump()
 	
 	if move_dir.dot(vel) < 0: emit_signal("direction_changed")
 	if not move_dir.is_equal_approx(Vector2()): emit_signal("moved")
 	else: emit_signal("stopped")
+
+
+func _can_jump() -> bool:
+	return is_on_floor() and _is_jump_just_pressed()
 
 
 func _get_input_dir() -> Vector2:

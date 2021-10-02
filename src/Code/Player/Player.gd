@@ -34,6 +34,8 @@ var jump_buffer_msecs = 100
 var last_shoot_time = 0
 var shoot_buffer_msecs = 100
 var was_on_floor = false
+var last_on_floor_time = 0
+var coyote_time_buffer = 100
 var charge = 0 setget _set_charge
 
 
@@ -92,6 +94,9 @@ func _move_player() -> void:
 		emit_signal("landed")
 	was_on_floor = is_on_floor()
 	
+	if is_on_floor():
+		last_on_floor_time = OS.get_system_time_msecs()
+	
 	if _can_jump():
 		jump()
 	
@@ -111,7 +116,11 @@ func _can_shoot() -> bool:
 	
 
 func _can_jump() -> bool:
-	return is_on_floor() and _is_jump_just_pressed()
+	return _in_coyote_time() and _is_jump_just_pressed()
+
+
+func _in_coyote_time() -> bool:
+	return OS.get_system_time_msecs() - last_on_floor_time < coyote_time_buffer
 
 
 func _get_input_dir() -> Vector2:

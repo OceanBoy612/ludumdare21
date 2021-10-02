@@ -45,6 +45,7 @@ var coyote_time_buffer = 100
 var charge = 0 setget _set_charge
 var health = 0 setget _set_health
 var is_dead = false
+var air_jump_counter = 0
 
 
 func _ready():
@@ -89,6 +90,13 @@ func jump():
 	last_jump_time = 0
 	emit_signal("jumped")
 
+func double_jump():
+	vel.y = -jump_strength
+	last_jump_time = 0
+	air_jump_counter += 1
+	_set_charge(0)
+	emit_signal("jumped")
+
 
 func hurt(amt:float, dir:Vector2):
 	if immortal:
@@ -123,6 +131,11 @@ func die():
 	queue_free()
 
 
+func _landed():
+	air_jump_counter = 0
+	emit_signal("landed")
+
+
 func _apply_knockback():
 	if is_dead: return 
 	move_and_slide(knockback)
@@ -146,7 +159,7 @@ func _move_player() -> void:
 	vel.x *= damping
 	
 	if not was_on_floor and is_on_floor():
-		emit_signal("landed")
+		_landed()
 	was_on_floor = is_on_floor()
 	
 	if is_on_floor():
@@ -154,6 +167,8 @@ func _move_player() -> void:
 	
 	if _can_jump():
 		jump()
+	elif _can_double_jump():
+		double_jump()
 	
 	if move_dir.dot(vel) < 0: emit_signal("direction_changed")
 	if not move_dir.is_equal_approx(Vector2()): 
@@ -178,6 +193,10 @@ func _can_shoot() -> bool:
 
 func _can_jump() -> bool:
 	return _in_coyote_time() and _is_jump_just_pressed()
+
+
+func _can_double_jump() -> bool:
+	return _is_jump_just_pressed() and not is_on_floor() and air_jump_counter == 0 and charge == 100
 
 
 func _in_coyote_time() -> bool:

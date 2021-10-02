@@ -27,6 +27,8 @@ __meta__ = {
 position = Vector2( 192, 108 )
 current = true
 script = ExtResource( 4 )
+max_offset = Vector2( 20, 15 )
+target = NodePath("../Player")
 
 [node name="Floortemp" type="StaticBody2D" parent="."]
 position = Vector2( 180, 187 )

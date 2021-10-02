@@ -1,16 +1,14 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Sprites/Effect Sprites/Flash_spriteframes.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Sprites/Effect Sprites/Explosion_medium_spriteframes.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Code/Effects/Effect.gd" type="Script" id=2]
 
-[node name="FlashEffect" type="Node2D"]
+[node name="ExplosionEffectMedium" type="Node2D"]
 script = ExtResource( 2 )
-random_flip = false
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
 animation = "Idle"
-frame = 2
 playing = true
 
 [connection signal="animation_finished" from="Sprite" to="." method="_on_Sprite_animation_finished"]

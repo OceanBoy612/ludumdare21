@@ -24,7 +24,7 @@ export(float, 0, 20, 1) var health: float = 3
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
-
+onready var muzzleEffect = preload("res://Code/Effects/ExplosionEffectSmall.tscn")
 
 var move_dir: Vector2 = Vector2()
 var look_dir: Vector2 = Vector2()
@@ -70,6 +70,8 @@ func shoot():
 	knockback += Vector2(-1,0).rotated(bul.global_rotation) * knockback_strength
 	
 	emit_signal("shot")
+	
+	muzzle_flash()
 
 
 func jump():
@@ -158,3 +160,8 @@ func _is_jump_just_pressed() -> bool:
 
 func _is_shoot_just_pressed() -> bool:
 	return OS.get_system_time_msecs() - last_shoot_time < shoot_buffer_msecs
+
+func muzzle_flash():
+	var effect = muzzleEffect.instance()
+	effect.position = $aimer/offset.global_position
+	get_parent().add_child(effect)

@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/Monster Sprites/Bottle_bat_spriteframes.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Code/Snail/Snail.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16.5833, 10.9132 )
+
+[node name="Bat" type="KinematicBody2D"]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource( 2 )
+speed = 60.0
+
+[node name="Shape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -18.2201 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -16 )
+frames = ExtResource( 1 )
+animation = "Idle"
+frame = 3
+
+[node name="rays" type="Node2D" parent="."]
+
+[node name="front" type="RayCast2D" parent="rays"]
+position = Vector2( 10.2006, -1.5026 )
+enabled = true
+cast_to = Vector2( 0, 3 )
+
+[node name="back" type="RayCast2D" parent="rays"]
+position = Vector2( -13.8245, 0 )
+enabled = true
+cast_to = Vector2( 0, 3 )
+
+[node name="face" type="RayCast2D" parent="rays"]
+position = Vector2( 14.1218, -10.1083 )
+enabled = true
+cast_to = Vector2( 3, 0 )

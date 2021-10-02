@@ -11,19 +11,25 @@ export(float, 0, 1000, 10) var acceleration: float = 300.0
 export(float, 0, 1, 0.025) var damping: float = 0.80
 export(float, 0, 1000, 10) var max_speed: float = 400.0
 export(float, 0, 200, 10) var gravity: float = 50.0
-
 export(float, 0, 2000, 25) var jump_strength: float = 300.0
+
+
+onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
 
 
 var move_dir: Vector2 = Vector2()
 var look_dir: Vector2 = Vector2()
 var vel: Vector2 = Vector2()
+
 var last_jump_time = 0
 var jump_buffer_msecs = 100
+var last_shoot_time = 0
+var shoot_buffer_msecs = 100
 
 
 func _physics_process(delta):
 	look_dir = _get_dir_to_mouse()
+	$aimer.rotation = look_dir.angle()
 	
 	_move_player()
 
@@ -31,6 +37,16 @@ func _physics_process(delta):
 func _input(event):
 	if event.is_action_pressed("jump") and event.is_pressed():
 		last_jump_time = OS.get_system_time_msecs()
+	if event.is_action_pressed("shoot") and event.is_pressed():
+		last_shoot_time = OS.get_system_time_msecs()
+		shoot()
+		
+
+func shoot():
+	var bul = bullet_tscn.instance()
+	bul.global_position = $aimer/offset.global_position
+	bul.global_rotation = $aimer.global_rotation
+	get_parent().add_child(bul)
 
 
 func _move_player() -> void:
@@ -55,7 +71,7 @@ func _move_player() -> void:
 func _get_input_dir() -> Vector2:
 	return Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-		Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+		0 #Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	).normalized()
 
 func _get_dir_to_mouse() -> Vector2:
@@ -63,3 +79,6 @@ func _get_dir_to_mouse() -> Vector2:
 
 func _is_jump_just_pressed() -> bool:
 	return OS.get_system_time_msecs() - last_jump_time < jump_buffer_msecs
+
+func _is_shoot_just_pressed() -> bool:
+	return OS.get_system_time_msecs() - last_shoot_time < shoot_buffer_msecs

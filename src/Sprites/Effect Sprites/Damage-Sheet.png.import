@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Explosion small-Sheet.png-96de70d021ed5712afdef45061ac1fd0.stex"
+path="res://.import/Damage-Sheet.png-d60cf7722e482d7968fa478c919368b5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Bullet Sprites/Explosion small-Sheet.png"
-dest_files=[ "res://.import/Explosion small-Sheet.png-96de70d021ed5712afdef45061ac1fd0.stex" ]
+source_file="res://Sprites/Effect Sprites/Damage-Sheet.png"
+dest_files=[ "res://.import/Damage-Sheet.png-d60cf7722e482d7968fa478c919368b5.stex" ]
 
 [params]
 

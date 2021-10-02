@@ -27,6 +27,7 @@ export(float, 0, 20, 1) var max_health: float = 3
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
 onready var muzzleEffect = preload("res://Code/Effects/FlashEffect.tscn") #MrGeko
+onready var lid_tscn = preload("res://Code/Player/Lid/Lid.tscn")
 
 var move_dir: Vector2 = Vector2()
 var look_dir: Vector2 = Vector2()
@@ -102,26 +103,38 @@ func hurt(amt:float, dir:Vector2):
 
 
 func die():
+	if is_dead: return 
 	is_dead = true
-	set_physics_process(false)
+#	set_physics_process(false)
 	set_process_input(false)
+	set_block_signals(true)
+	
 	$Sprite.play("Die")
 	yield($Sprite, "animation_finished")
+	yield(get_tree().create_timer(0.3), "timeout")
+	
+	set_block_signals(false)
 	emit_signal("died")
+	
+	var lid = lid_tscn.instance()
+	lid.global_position = global_position
+	get_parent().add_child(lid)
+	
 	queue_free()
 
 
 func _apply_knockback():
+	if is_dead: return 
 	move_and_slide(knockback)
 	knockback *= knockback_decay
 
 
 func _move_player() -> void:
-	var move_dir = _get_input_dir()
+	var move_dir = _get_input_dir() if not is_dead else Vector2()
 	vel += move_dir * acceleration
 	vel.x = clamp(vel.x, -max_speed, max_speed)
 	
-	vel += Vector2(0, gravity) # gravity
+	vel.y += gravity
 	
 	vel = move_and_slide(vel, Vector2(0,-1))
 	

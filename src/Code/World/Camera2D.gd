@@ -41,8 +41,10 @@ func _ready():
 
 
 func _process(delta):
-	if is_instance_valid(target):
-		global_position = get_node(target).global_position
+	if target:
+		var t = get_node_or_null(target)
+		if t:
+			global_position = t.global_position
 	if trauma:
 		trauma = max(trauma - decay * delta, 0)
 		shake()

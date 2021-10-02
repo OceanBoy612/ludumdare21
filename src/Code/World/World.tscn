@@ -57,6 +57,8 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 192, 108 )
 current = true
+process_mode = 0
+smoothing_enabled = true
 script = ExtResource( 4 )
 decay = 2.0
 max_offset = Vector2( 20, 15 )
@@ -71,11 +73,6 @@ tile_data = PoolIntArray( -65513, 0, 0, -65512, 0, 2, 23, 0, 65536, 24, 0, 65538
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 48, 80 )
-max_speed = 170.0
-gravity = 30.0
-jump_strength = 500.0
-knockback_strength = 375.0
-hurt_knockback_strength = 550.0
 
 [node name="Snail" parent="." instance=ExtResource( 6 )]
 position = Vector2( 232, 160 )
@@ -83,3 +80,6 @@ position = Vector2( 232, 160 )
 [node name="Snail2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 368, 136 )
 rotation = -1.57079
+
+[node name="SpawnPoint" type="Position2D" parent="."]
+position = Vector2( 48, 72 )

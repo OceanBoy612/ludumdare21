@@ -13,8 +13,15 @@ radius = 2.59562
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
 script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+acceleration = 430.0
 damping = 0.6
-knockback_decay = 0.7
+max_speed = 160.0
+gravity = 30.0
+jump_strength = 500.0
+knockback_decay = 0.55
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -7 )

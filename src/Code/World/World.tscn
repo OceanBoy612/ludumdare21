@@ -17,11 +17,13 @@ __meta__ = {
 }
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 517, 565 )
+position = Vector2( 180, 187 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 86, 49 )
-gravity = 70.0
+max_speed = 170.0
+gravity = 30.0
+jump_strength = 500.0

@@ -7,6 +7,7 @@ signal stopped
 signal jumped
 signal landed
 signal shot
+signal died
 signal direction_changed
 
 
@@ -18,6 +19,8 @@ export(float, 0, 2000, 25) var jump_strength: float = 300.0
 export(float, 0, 100, 1) var shoot_cost: float = 30
 export(float, 0, 1000, 25) var knockback_strength: float = 250
 export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
+export(float, 0, 1000, 25) var hurt_knockback_strength: float = 200
+export(float, 0, 20, 1) var health: float = 3
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -28,7 +31,7 @@ var look_dir: Vector2 = Vector2()
 var vel: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 
-
+var immortal = false
 var last_jump_time = 0
 var jump_buffer_msecs = 100
 var last_shoot_time = 0
@@ -75,6 +78,18 @@ func jump():
 	emit_signal("jumped")
 
 
+func hurt(amt:float, dir:Vector2):
+	if immortal:
+		return 
+	health -= amt
+	if health <= 0:
+		emit_signal("died")
+	knockback += dir * hurt_knockback_strength
+	immortal = true
+	yield(get_tree().create_timer(0.2), "timeout")
+	immortal = false
+
+
 func _apply_knockback():
 	move_and_slide(knockback)
 	knockback *= knockback_decay
@@ -88,6 +103,12 @@ func _move_player() -> void:
 	vel += Vector2(0, gravity) # gravity
 	
 	vel = move_and_slide(vel, Vector2(0,-1))
+	
+	for i in get_slide_count():
+		var col: KinematicCollision2D = get_slide_collision(i)
+		if col and "damage" in col.collider:
+			hurt(col.collider.damage, col.normal)
+	
 	vel.x *= damping
 	
 	if not was_on_floor and is_on_floor():

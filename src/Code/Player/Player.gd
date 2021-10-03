@@ -77,7 +77,6 @@ func _input(event):
 		
 
 func shoot_laser():
-	print("shooting laser")
 	_set_charge(charge - shoot_cost)
 	var las = laser_tscn.instance()
 #	las.global_position = $aimer/offset.global_position
@@ -86,15 +85,18 @@ func shoot_laser():
 	# figure out the end position - clamp laser to three directions
 	var start_pos: Vector2
 	var target_pos: Vector2
-	if $aimer.rotation_degrees > -45 and $aimer.rotation_degrees < 90:
+	if $aimer.rotation_degrees >= -45 and $aimer.rotation_degrees <= 90:
 		start_pos = $LaserRays/right.global_position
-		target_pos = $LaserRays/right.get_collision_point()
-	elif $aimer.rotation_degrees > -135 and $aimer.rotation_degrees < -45:
+		target_pos = $LaserRays/right.get_collision_point() if $LaserRays/right.is_colliding() else start_pos + Vector2(1000, 0)
+	elif $aimer.rotation_degrees >= -135 and $aimer.rotation_degrees <= -45:
 		start_pos = $LaserRays/up.global_position
-		target_pos = $LaserRays/up.get_collision_point()
-	elif $aimer.rotation_degrees < -135 or $aimer.rotation_degrees > 90:
+		target_pos = $LaserRays/up.get_collision_point() if $LaserRays/up.is_colliding() else start_pos + Vector2(0, -1000)
+	elif $aimer.rotation_degrees <= -135 or $aimer.rotation_degrees >= 90:
 		start_pos = $LaserRays/left.global_position
-		target_pos = $LaserRays/left.get_collision_point()
+		target_pos = $LaserRays/left.get_collision_point() if $LaserRays/left.is_colliding() else start_pos + Vector2(-1000, 0)
+	else:
+		print("AAAAAAAAAAAAAAAAAAAAAA")
+	
 	
 	las.init(start_pos, target_pos)
 	get_parent().add_child(las)

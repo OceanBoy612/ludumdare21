@@ -33,8 +33,30 @@ frames = ExtResource( 2 )
 animation = "Idle"
 script = ExtResource( 3 )
 
+[node name="LaserRays" type="Node2D" parent="."]
+position = Vector2( 0, -8 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="right" type="RayCast2D" parent="LaserRays"]
+position = Vector2( 10, 0 )
+enabled = true
+cast_to = Vector2( 1000, 0 )
+
+[node name="up" type="RayCast2D" parent="LaserRays"]
+position = Vector2( 0, -10 )
+enabled = true
+cast_to = Vector2( 0, -1000 )
+
+[node name="left" type="RayCast2D" parent="LaserRays"]
+position = Vector2( -10, 0 )
+enabled = true
+cast_to = Vector2( -1000, 0 )
+
 [node name="aimer" type="Position2D" parent="."]
 position = Vector2( 0, -8 )
+rotation = 1.63886
 
 [node name="offset" type="Position2D" parent="aimer"]
 position = Vector2( 10, 0 )

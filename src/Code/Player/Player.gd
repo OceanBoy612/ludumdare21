@@ -26,8 +26,10 @@ export(float, 0, 20, 1) var max_health: float = 3
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
+onready var laser_tscn = preload("res://Code/Player/Laser/Laser.tscn")
 onready var muzzleEffect = preload("res://Code/Effects/FlashEffect.tscn") #MrGeko
 onready var lid_tscn = preload("res://Code/Player/Lid/Lid.tscn")
+
 
 var move_dir: Vector2 = Vector2()
 var look_dir: Vector2 = Vector2()
@@ -45,6 +47,7 @@ var coyote_time_buffer = 100
 var charge = 0 setget _set_charge
 var health = 0 setget _set_health
 var is_dead = false
+var air_jump_counter = 0
 
 
 func _ready():
@@ -58,18 +61,60 @@ func _physics_process(delta):
 	
 	_apply_knockback()
 	_move_player()
-
+	
+	update()
+	
 
 func _input(event):
 	if event.is_action_pressed("jump") and event.is_pressed():
 		last_jump_time = OS.get_system_time_msecs()
 	if event.is_action_pressed("shoot") and event.is_pressed():
 		last_shoot_time = OS.get_system_time_msecs()
-		if _can_shoot():
-			shoot()
+		if _can_shoot_laser():
+			shoot_laser()
+		elif _can_shoot_bullet():
+			shoot_bullet()
 		
 
-func shoot():
+func shoot_laser():
+	_set_charge(charge - shoot_cost)
+	var las = laser_tscn.instance()
+#	las.global_position = $aimer/offset.global_position
+#	las.global_rotation = $aimer.global_rotation
+	
+	# figure out the end position - clamp laser to three directions
+	var start_pos: Vector2
+	var target_pos: Vector2
+	if $aimer.rotation_degrees >= -45 and $aimer.rotation_degrees <= 90:
+		start_pos = $LaserRays/right.global_position
+		target_pos = $LaserRays/right.get_collision_point() if $LaserRays/right.is_colliding() else start_pos + Vector2(1000, 0)
+	elif $aimer.rotation_degrees >= -135 and $aimer.rotation_degrees <= -45:
+		start_pos = $LaserRays/up.global_position
+		target_pos = $LaserRays/up.get_collision_point() if $LaserRays/up.is_colliding() else start_pos + Vector2(0, -1000)
+	elif $aimer.rotation_degrees <= -135 or $aimer.rotation_degrees >= 90:
+		start_pos = $LaserRays/left.global_position
+		target_pos = $LaserRays/left.get_collision_point() if $LaserRays/left.is_colliding() else start_pos + Vector2(-1000, 0)
+	else:
+		print("AAAAAAAAAAAAAAAAAAAAAA")
+	
+	
+	las.init(start_pos, target_pos)
+	get_parent().add_child(las)
+	
+	# recoil
+	#knockback += Vector2(-1,0).rotated(las.global_rotation) * knockback_strength
+	
+	emit_signal("shot")
+	
+#	muzzle_flash() #MrGeko
+
+
+func _draw():
+	var f = Control.new().get_font("default")
+	draw_string(f, Vector2(10,0), str($aimer.rotation_degrees))
+
+
+func shoot_bullet():
 	_set_charge(charge - shoot_cost)
 	var bul = bullet_tscn.instance()
 	bul.global_position = $aimer/offset.global_position
@@ -87,6 +132,13 @@ func shoot():
 func jump():
 	vel.y = -jump_strength
 	last_jump_time = 0
+	emit_signal("jumped")
+
+func double_jump():
+	vel.y = -jump_strength
+	last_jump_time = 0
+	air_jump_counter += 1
+	_set_charge(0)
 	emit_signal("jumped")
 
 
@@ -123,6 +175,11 @@ func die():
 	queue_free()
 
 
+func _landed():
+	air_jump_counter = 0
+	emit_signal("landed")
+
+
 func _apply_knockback():
 	if is_dead: return 
 	move_and_slide(knockback)
@@ -146,7 +203,7 @@ func _move_player() -> void:
 	vel.x *= damping
 	
 	if not was_on_floor and is_on_floor():
-		emit_signal("landed")
+		_landed()
 	was_on_floor = is_on_floor()
 	
 	if is_on_floor():
@@ -154,6 +211,8 @@ func _move_player() -> void:
 	
 	if _can_jump():
 		jump()
+	elif _can_double_jump():
+		double_jump()
 	
 	if move_dir.dot(vel) < 0: emit_signal("direction_changed")
 	if not move_dir.is_equal_approx(Vector2()): 
@@ -172,12 +231,19 @@ func _set_health(v):
 	emit_signal("health_changed")
 
 
-func _can_shoot() -> bool:
-	return charge >= shoot_cost and _is_shoot_just_pressed()
+func _can_shoot_laser() -> bool:
+	return charge >= shoot_cost and _is_shoot_just_pressed() and is_on_floor()
 	
+func _can_shoot_bullet() -> bool:
+	return charge >= shoot_cost and _is_shoot_just_pressed() and not is_on_floor()
+
 
 func _can_jump() -> bool:
 	return _in_coyote_time() and _is_jump_just_pressed()
+
+
+func _can_double_jump() -> bool:
+	return _is_jump_just_pressed() and not is_on_floor() and air_jump_counter == 0 and charge == 100
 
 
 func _in_coyote_time() -> bool:

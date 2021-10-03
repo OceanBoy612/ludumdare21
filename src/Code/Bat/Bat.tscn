@@ -10,14 +10,14 @@ extents = Vector2( 16.5833, 10.9132 )
 collision_layer = 8
 collision_mask = 3
 script = ExtResource( 2 )
-speed = 60.0
+speed = 40.0
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -18.2201 )
+position = Vector2( 0, 0.77994 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -16 )
+position = Vector2( 0, 0.25 )
 frames = ExtResource( 1 )
 animation = "Idle"
 frame = 3
@@ -25,16 +25,16 @@ frame = 3
 [node name="rays" type="Node2D" parent="."]
 
 [node name="front" type="RayCast2D" parent="rays"]
-position = Vector2( 10.2006, -1.5026 )
+position = Vector2( 12.9506, 7.4974 )
 enabled = true
 cast_to = Vector2( 0, 3 )
 
 [node name="back" type="RayCast2D" parent="rays"]
-position = Vector2( -13.8245, 0 )
+position = Vector2( -13.8245, 8 )
 enabled = true
 cast_to = Vector2( 0, 3 )
 
 [node name="face" type="RayCast2D" parent="rays"]
-position = Vector2( 14.1218, -10.1083 )
+position = Vector2( 14.3718, 0.8917 )
 enabled = true
 cast_to = Vector2( 3, 0 )

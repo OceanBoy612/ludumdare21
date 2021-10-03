@@ -26,8 +26,10 @@ export(float, 0, 20, 1) var max_health: float = 3
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
+onready var laser_tscn = preload("res://Code/Player/Laser/Laser.tscn")
 onready var muzzleEffect = preload("res://Code/Effects/FlashEffect.tscn") #MrGeko
 onready var lid_tscn = preload("res://Code/Player/Lid/Lid.tscn")
+
 
 var move_dir: Vector2 = Vector2()
 var look_dir: Vector2 = Vector2()
@@ -59,18 +61,58 @@ func _physics_process(delta):
 	
 	_apply_knockback()
 	_move_player()
-
+	
+	update()
+	
 
 func _input(event):
 	if event.is_action_pressed("jump") and event.is_pressed():
 		last_jump_time = OS.get_system_time_msecs()
 	if event.is_action_pressed("shoot") and event.is_pressed():
 		last_shoot_time = OS.get_system_time_msecs()
-		if _can_shoot():
-			shoot()
+		if _can_shoot_laser():
+			shoot_laser()
+		elif _can_shoot_bullet():
+			shoot_bullet()
 		
 
-func shoot():
+func shoot_laser():
+	print("shooting laser")
+	_set_charge(charge - shoot_cost)
+	var las = laser_tscn.instance()
+#	las.global_position = $aimer/offset.global_position
+#	las.global_rotation = $aimer.global_rotation
+	
+	# figure out the end position - clamp laser to three directions
+	var start_pos: Vector2
+	var target_pos: Vector2
+	if $aimer.rotation_degrees > -45 and $aimer.rotation_degrees < 90:
+		start_pos = $LaserRays/right.global_position
+		target_pos = $LaserRays/right.get_collision_point()
+	elif $aimer.rotation_degrees > -135 and $aimer.rotation_degrees < -45:
+		start_pos = $LaserRays/up.global_position
+		target_pos = $LaserRays/up.get_collision_point()
+	elif $aimer.rotation_degrees < -135 or $aimer.rotation_degrees > 90:
+		start_pos = $LaserRays/left.global_position
+		target_pos = $LaserRays/left.get_collision_point()
+	
+	las.init(start_pos, target_pos)
+	get_parent().add_child(las)
+	
+	# recoil
+	#knockback += Vector2(-1,0).rotated(las.global_rotation) * knockback_strength
+	
+	emit_signal("shot")
+	
+#	muzzle_flash() #MrGeko
+
+
+func _draw():
+	var f = Control.new().get_font("default")
+	draw_string(f, Vector2(10,0), str($aimer.rotation_degrees))
+
+
+func shoot_bullet():
 	_set_charge(charge - shoot_cost)
 	var bul = bullet_tscn.instance()
 	bul.global_position = $aimer/offset.global_position
@@ -187,9 +229,12 @@ func _set_health(v):
 	emit_signal("health_changed")
 
 
-func _can_shoot() -> bool:
-	return charge >= shoot_cost and _is_shoot_just_pressed()
+func _can_shoot_laser() -> bool:
+	return charge >= shoot_cost and _is_shoot_just_pressed() and is_on_floor()
 	
+func _can_shoot_bullet() -> bool:
+	return charge >= shoot_cost and _is_shoot_just_pressed() and not is_on_floor()
+
 
 func _can_jump() -> bool:
 	return _in_coyote_time() and _is_jump_just_pressed()

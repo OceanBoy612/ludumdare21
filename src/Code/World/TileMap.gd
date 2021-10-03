@@ -4,9 +4,9 @@ extends TileMap
 var BREAKABLE_TILES = [1]
 
 
-func break_tile(col: KinematicCollision2D):
+func break_tile(impact_point: Vector2):
 	# find the tile that should be broken. and delete it.
-	var impact_point: Vector2 = col.position - (col.normal * 4)
+#	var impact_point: Vector2 = col.position - (col.normal * 4)
 	
 	var cell_coord = world_to_map(impact_point)
 	var cell_id = get_cellv(cell_coord)

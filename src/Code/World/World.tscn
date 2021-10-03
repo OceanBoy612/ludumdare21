@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Code/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Code/World/World.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Sprites/Circle3.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/Circle1.png" type="Texture" id=10]
 [ext_resource path="res://Code/World/TileMap.gd" type="Script" id=11]
+[ext_resource path="res://Code/Player/JumpExplosion/JumpExplosion.tscn" type="PackedScene" id=12]
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
@@ -85,3 +86,6 @@ rotation = -1.57079
 
 [node name="SpawnPoint" type="Position2D" parent="."]
 position = Vector2( 48, 72 )
+
+[node name="JumpExplosion" parent="." instance=ExtResource( 12 )]
+position = Vector2( 112, 88 )

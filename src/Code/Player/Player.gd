@@ -27,6 +27,7 @@ export(float, 0, 20, 1) var max_health: float = 3
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
 onready var laser_tscn = preload("res://Code/Player/Laser/Laser.tscn")
+onready var jump_expl_tscn = preload("res://Code/Player/JumpExplosion/JumpExplosion.tscn")
 onready var muzzleEffect = preload("res://Code/Effects/FlashEffect.tscn") #MrGeko
 onready var lid_tscn = preload("res://Code/Player/Lid/Lid.tscn")
 
@@ -134,7 +135,12 @@ func jump():
 	last_jump_time = 0
 	emit_signal("jumped")
 
+
 func double_jump():
+	var expl = jump_expl_tscn.instance()
+	expl.global_position = global_position
+	get_parent().add_child(expl)
+	
 	vel.y = -jump_strength
 	last_jump_time = 0
 	air_jump_counter += 1

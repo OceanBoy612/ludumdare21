@@ -13,7 +13,7 @@ func _physics_process(delta):
 	var col: KinematicCollision2D = move_and_collide(Vector2(speed,0).rotated(rotation))
 	if col:
 		if col.collider.has_method("break_tile"):
-			col.collider.break_tile(col)
+			col.collider.break_tile(col.position - (col.normal * 4))
 		if col.collider.has_method("hurt"):
 			col.collider.hurt()
 		die()

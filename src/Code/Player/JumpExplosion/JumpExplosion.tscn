@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Sprites/Effect Sprites/Explosion_48_spriteframes.tres" type="SpriteFrames" id=1]
+[ext_resource path="res://Code/Player/JumpExplosion/JumpExplosion.gd" type="Script" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
+
+[node name="JumpExplosion" type="Area2D"]
+collision_layer = 0
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = ExtResource( 1 )
+animation = "Idle"
+
+[node name="points" type="Node2D" parent="."]
+
+[node name="p1" type="Position2D" parent="points"]
+position = Vector2( -10.5613, 10.2272 )
+
+[node name="p2" type="Position2D" parent="points"]
+position = Vector2( -0.204636, 15.4613 )
+
+[node name="p3" type="Position2D" parent="points"]
+position = Vector2( 11.043, 10.3386 )
+
+[node name="p4" type="Position2D" parent="points"]
+position = Vector2( 15.6088, 0.093277 )
+
+[node name="p5" type="Position2D" parent="points"]
+position = Vector2( 11.4884, -10.4861 )
+
+[node name="p6" type="Position2D" parent="points"]
+position = Vector2( -0.0932693, -15.6088 )
+
+[node name="p7" type="Position2D" parent="points"]
+position = Vector2( -11.6749, -9.92934 )
+
+[node name="p8" type="Position2D" parent="points"]
+position = Vector2( -15.7954, 0.427357 )
+
+[node name="p9" type="Position2D" parent="points"]
+position = Vector2( 0.129456, 0.0932732 )
+
+[connection signal="body_entered" from="." to="." method="_on_JumpExplosion_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_JumpExplosion_body_shape_entered"]

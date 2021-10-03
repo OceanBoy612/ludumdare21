@@ -12,8 +12,8 @@ func _physics_process(delta):
 	$Sprite.rotate(delta * deg2rad(rotation_speed))
 	var col: KinematicCollision2D = move_and_collide(Vector2(speed,0).rotated(rotation))
 	if col:
-		if col.collider.has_method("break_tile"):
-			col.collider.break_tile(col.position - (col.normal * 4))
+#		if col.collider.has_method("break_tile"): # to break the tiles
+#			col.collider.break_tile(col.position - (col.normal * 4))
 		if col.collider.has_method("hurt"):
 			col.collider.hurt()
 		die()

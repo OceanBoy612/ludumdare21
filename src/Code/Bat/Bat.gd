@@ -41,7 +41,7 @@ func move():
 		turn()
 
 func attack():
-	var player_node = get_parent().get_node("Player")
+	var player_node = get_parent().get_node("Player") # TODO: this needs to change
 	if player_node:
 		var bul = bullet_tscn.instance()
 		bul.global_position = global_position

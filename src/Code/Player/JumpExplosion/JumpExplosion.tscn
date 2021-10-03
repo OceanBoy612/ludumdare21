@@ -47,4 +47,3 @@ position = Vector2( -15.7954, 0.427357 )
 position = Vector2( 0.129456, 0.0932732 )
 
 [connection signal="body_entered" from="." to="." method="_on_JumpExplosion_body_entered"]
-[connection signal="body_shape_entered" from="." to="." method="_on_JumpExplosion_body_shape_entered"]

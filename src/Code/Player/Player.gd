@@ -49,6 +49,7 @@ var charge = 0 setget _set_charge
 var health = 0 setget _set_health
 var is_dead = false
 var air_jump_counter = 0
+var input_lock = false
 
 
 func _ready():
@@ -106,6 +107,9 @@ func shoot_laser():
 	#knockback += Vector2(-1,0).rotated(las.global_rotation) * knockback_strength
 	
 	emit_signal("shot")
+	
+	# freeze the player for 0.25 seconds
+	freeze_player(0.25)
 	
 #	muzzle_flash() #MrGeko
 
@@ -179,6 +183,12 @@ func die():
 	get_parent().add_child(lid)
 	
 	queue_free()
+
+
+func freeze_player(time: float):
+	input_lock = true
+	yield(get_tree().create_timer(time), "timeout")
+	input_lock = false
 
 
 func _landed():
@@ -260,7 +270,7 @@ func _get_input_dir() -> Vector2:
 	return Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
 		0 #Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-	).normalized()
+	).normalized() if not input_lock else Vector2()
 
 func _get_dir_to_mouse() -> Vector2:
 	return (get_global_mouse_position() - global_position).normalized()

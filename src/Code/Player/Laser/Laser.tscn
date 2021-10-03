@@ -8,10 +8,9 @@
 [ext_resource path="res://Sprites/Bullet Sprites/Laser4.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Bullet Sprites/Laser5.png" type="Texture" id=7]
 
-[sub_resource type="AnimatedTexture" id=2]
-flags = 2
+[sub_resource type="AnimatedTexture" id=4]
 frames = 6
-fps = 6.0
+fps = 24.0
 frame_0/texture = ExtResource( 3 )
 frame_1/texture = ExtResource( 4 )
 frame_1/delay_sec = 0.0
@@ -24,8 +23,7 @@ frame_4/delay_sec = 0.0
 frame_5/texture = ExtResource( 1 )
 frame_5/delay_sec = 0.0
 
-[sub_resource type="Animation" id=1]
-resource_name = "flash"
+[sub_resource type="Animation" id=2]
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("Line2D:self_modulate:r")
 tracks/0/interp = 1
@@ -89,13 +87,13 @@ script = ExtResource( 2 )
 
 [node name="Line2D" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 0, 64.226, 0 )
-width = 6.83
+width = 3.304
 default_color = Color( 1, 1, 1, 1 )
-texture = SubResource( 2 )
+texture = SubResource( 4 )
 texture_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/flash = SubResource( 1 )
+anims/flash = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4

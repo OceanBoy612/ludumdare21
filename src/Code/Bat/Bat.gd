@@ -13,8 +13,8 @@ var shoot_time = 2
 onready var bullet_tscn = preload("res://Code/Bat/BadBullet/BadBullet.tscn")
 onready var player_node = get_parent().get_node("Player")
 
-
 func _ready():
+	add_to_group("enemies")
 	$Sprite.play("Walk")
 
 func _physics_process(delta):
@@ -55,7 +55,7 @@ func turn():
 
 
 func can_turn():
-	return ((not $rays/front.is_colliding() and $rays/back.is_colliding()) or 
+	return ((not $rays/front.is_colliding() and $rays/back.is_colliding()) or
 			($rays/face.is_colliding()))
 
 

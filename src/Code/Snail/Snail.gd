@@ -10,6 +10,7 @@ var damage: float = 1.0
 
 
 func _ready():
+	add_to_group("enemies")
 	$Sprite.play("Walk")
 
 

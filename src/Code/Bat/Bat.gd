@@ -11,7 +11,6 @@ var shoot_timer = 0
 var shoot_time = 2
 
 onready var bullet_tscn = preload("res://Code/Bat/BadBullet/BadBullet.tscn")
-onready var player_node = get_parent().get_node("Player")
 
 func _ready():
 	add_to_group("enemies")
@@ -42,11 +41,13 @@ func move():
 		turn()
 
 func attack():
-	var bul = bullet_tscn.instance()
-	bul.global_position = global_position
-	bul.direction = global_position.direction_to(player_node.global_position)
-	print(bul.direction)
-	get_parent().add_child(bul)
+	var player_node = get_parent().get_node("Player")
+	if player_node:
+		var bul = bullet_tscn.instance()
+		bul.global_position = global_position
+		bul.direction = global_position.direction_to(player_node.global_position)
+		print(bul.direction)
+		get_parent().add_child(bul)
 	state = MOVE
 
 func turn():

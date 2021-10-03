@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Sprites/Bullet Sprites/Laser6.png" type="Texture" id=1]
 [ext_resource path="res://Code/Player/Laser/Laser.gd" type="Script" id=2]
@@ -8,75 +8,34 @@
 [ext_resource path="res://Sprites/Bullet Sprites/Laser4.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/Bullet Sprites/Laser5.png" type="Texture" id=7]
 
-[sub_resource type="AnimatedTexture" id=4]
-frames = 6
-fps = 24.0
-frame_0/texture = ExtResource( 3 )
-frame_1/texture = ExtResource( 4 )
-frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 5 )
-frame_2/delay_sec = 0.0
-frame_3/texture = ExtResource( 6 )
-frame_3/delay_sec = 0.0
-frame_4/texture = ExtResource( 7 )
-frame_4/delay_sec = 0.0
-frame_5/texture = ExtResource( 1 )
-frame_5/delay_sec = 0.0
-
 [sub_resource type="Animation" id=2]
-tracks/0/type = "bezier"
-tracks/0/path = NodePath("Line2D:self_modulate:r")
+length = 0.25
+step = 0.005
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
-tracks/0/enabled = false
+tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/1/type = "bezier"
-tracks/1/path = NodePath("Line2D:self_modulate:g")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = false
-tracks/1/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/2/type = "bezier"
-tracks/2/path = NodePath("Line2D:self_modulate:b")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = false
-tracks/2/keys = {
-"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0 )
-}
-tracks/3/type = "bezier"
-tracks/3/path = NodePath("Line2D:self_modulate:a")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = false
-tracks/3/keys = {
-"points": PoolRealArray( 1, -0.0423267, -0.00793767, 0.0423267, 0.00793767, 0.785506, -0.0259283, -0.161768, 0.0259283, 0.161768, 0.547909, -0.0335341, -0.217376, 0.0335341, 0.217376, 0.932109, -0.0353681, -0.217376, 0.0353681, 0.217376, 0.583295, -0.0400881, -0.121326, 0.0400881, 0.121326, 0.76023, -0.0102221, 0.217376, 0.0102221, -0.217376, 1, -0.0284096, 0.00288236, 0.0284096, -0.00288236 ),
-"times": PoolRealArray( 0, 0.1, 0.3, 0.5, 0.7, 0.8, 1 )
-}
-tracks/4/type = "method"
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.25 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "queue_free"
 } ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Line2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.04, 0.08, 0.12, 0.16, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 1 ) ]
 }
 
 [sub_resource type="SegmentShape2D" id=3]
@@ -89,7 +48,7 @@ script = ExtResource( 2 )
 points = PoolVector2Array( 0, 0, 64.226, 0 )
 width = 3.304
 default_color = Color( 1, 1, 1, 1 )
-texture = SubResource( 4 )
+texture = ExtResource( 1 )
 texture_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

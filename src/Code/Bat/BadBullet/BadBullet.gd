@@ -11,8 +11,8 @@ func _physics_process(delta):
 	if col:
 #		if col.collider.has_method("break_tile"):
 #			col.colliwder.break_tile(col)
-#		if col.collider.has_method("hurt"):
-#			col.collider.hurt(1, direction)
+		if col.collider.has_method("damage"):
+			col.collider.damage(1, direction)
 		die()
 	
 

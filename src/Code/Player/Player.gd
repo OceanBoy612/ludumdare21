@@ -152,7 +152,7 @@ func double_jump():
 	emit_signal("jumped")
 
 
-func hurt(amt:float, dir:Vector2):
+func damage(amt:float, dir:Vector2):
 	if immortal:
 		return 
 	_set_health(health - amt)
@@ -214,7 +214,7 @@ func _move_player() -> void:
 	for i in get_slide_count():
 		var col: KinematicCollision2D = get_slide_collision(i)
 		if col and "damage" in col.collider:
-			hurt(col.collider.damage, col.normal)
+			damage(col.collider.damage, col.normal)
 	
 	vel.x *= damping
 	

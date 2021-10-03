@@ -9,6 +9,7 @@
 [ext_resource path="res://Sprites/Bullet Sprites/Laser5.png" type="Texture" id=7]
 
 [sub_resource type="AnimatedTexture" id=1]
+flags = 2
 frames = 6
 fps = 24.0
 frame_0/texture = ExtResource( 3 )
@@ -24,6 +25,8 @@ frame_5/texture = ExtResource( 1 )
 frame_5/delay_sec = 0.0
 
 [sub_resource type="Animation" id=2]
+length = 0.25
+step = 0.01
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("Line2D:self_modulate:r")
 tracks/0/interp = 1
@@ -71,7 +74,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 1 ),
+"times": PoolRealArray( 0.25 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],

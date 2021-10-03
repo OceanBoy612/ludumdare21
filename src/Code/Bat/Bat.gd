@@ -9,6 +9,7 @@ var damage: float = 1.0
 var state = "patrol"
 
 func _ready():
+	add_to_group("enemies")
 	$Sprite.play("Idle")
 
 

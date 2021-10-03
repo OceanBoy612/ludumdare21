@@ -9,12 +9,16 @@ enum {MOVE, ATTACK}
 var state = MOVE
 var shoot_timer = 0
 var shoot_time = 2
+var player_node: Player
+
 
 onready var bullet_tscn = preload("res://Code/Bat/BadBullet/BadBullet.tscn")
 
+
 func _ready():
 	add_to_group("enemies")
-	$Sprite.play("Walk")
+	$Sprite.play("Idle")
+
 
 func _physics_process(delta):
 	match state:
@@ -28,6 +32,11 @@ func _physics_process(delta):
 	else:
 		shoot_timer += delta
 
+
+func set_player(newp):
+	player_node = newp
+
+
 func move():
 	up_dir = Vector2(0, -1).rotated(rotation)
 	move_dir = Vector2(1,0).rotated(rotation)
@@ -40,8 +49,9 @@ func move():
 	if can_turn():
 		turn()
 
+
 func attack():
-	var player_node = get_parent().get_node("Player") # TODO: this needs to change
+#	var player_node = get_parent().get_node("Player") # TODO: this needs to change
 	if player_node:
 		var bul = bullet_tscn.instance()
 		bul.global_position = global_position
@@ -49,6 +59,7 @@ func attack():
 		print(bul.direction)
 		get_parent().add_child(bul)
 	state = MOVE
+
 
 func turn():
 	scale.x *= -1

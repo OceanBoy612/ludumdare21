@@ -11,6 +11,7 @@ func _ready():
 
 func connect_player():
 	$GUI.set_player(curr_player)
+	get_tree().call_group("enemies", "set_player", curr_player)
 	
 	$Camera2D.target = curr_player.get_path()
 	

@@ -5,22 +5,29 @@ export(float, 0, 1000, 20) var speed: float = 100
 var move_dir: Vector2 = Vector2()
 var up_dir: Vector2 = Vector2()
 var damage: float = 1.0
+enum {MOVE, ATTACK}
+var state = MOVE
+var shoot_timer = 0
+var shoot_time = 2
 
-var state = "patrol"
+onready var bullet_tscn = preload("res://Code/Bat/BadBullet/BadBullet.tscn")
+onready var player_node = get_parent().get_node("Player")
+
 
 func _ready():
-	$Sprite.play("Idle")
-
+	$Sprite.play("Walk")
 
 func _physics_process(delta):
 	match state:
-		"move":
+		MOVE:
 			move()
-		"alert":
-			alert()
-		"shoot":
-			shoot()
-
+		ATTACK:
+			attack()
+	if shoot_timer > shoot_time:
+		shoot_timer = 0
+		state = ATTACK
+	else:
+		shoot_timer += delta
 
 func move():
 	up_dir = Vector2(0, -1).rotated(rotation)
@@ -34,20 +41,23 @@ func move():
 	if can_turn():
 		turn()
 
-func alert():
-	state = "shoot"
-
-func shoot():
-	
-	state = "move"
+func attack():
+	var bul = bullet_tscn.instance()
+	bul.global_position = global_position
+	bul.direction = global_position.direction_to(player_node.global_position)
+	print(bul.direction)
+	get_parent().add_child(bul)
+	state = MOVE
 
 func turn():
 	scale.x *= -1
 	pass
 
+
 func can_turn():
 	return ((not $rays/front.is_colliding() and $rays/back.is_colliding()) or 
 			($rays/face.is_colliding()))
-			
+
+
 func hurt(): # get's called by the bullet on collision
 	queue_free()

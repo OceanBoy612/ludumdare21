@@ -10,7 +10,7 @@ var up_dir: Vector2 = Vector2()
 var damage: float = 1.0
 
 
-onready var med_expl_tscn = preload("res://Code/Effects/ExplosionEffectMedium.tscn")
+onready var large_expl_tscn = preload("res://Code/Effects/ExplosionEffectLarge.tscn")
 
 
 func _ready():
@@ -47,7 +47,7 @@ func hurt(): # get's called by the bullet on collision
 	health -= 1
 	$anim.play("flash")
 	if health <= 0:
-		var expl = med_expl_tscn.instance()
+		var expl = large_expl_tscn.instance()
 		expl.global_position = global_position
 		get_parent().add_child(expl)
 		

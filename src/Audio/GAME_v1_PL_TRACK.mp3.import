@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/GAME_v1_PL_TRACK.mp3-f04b021f13eb072b82530ec538d1a01b.mp3str"
+
+[deps]
+
+source_file="res://Audio/GAME_v1_PL_TRACK.mp3"
+dest_files=[ "res://.import/GAME_v1_PL_TRACK.mp3-f04b021f13eb072b82530ec538d1a01b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

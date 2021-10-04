@@ -60,7 +60,6 @@ func attack():
 		var bul = bullet_tscn.instance()
 		bul.global_position = global_position
 		bul.direction = global_position.direction_to(player_node.global_position)
-		print(bul.direction)
 		get_parent().add_child(bul)
 	state = MOVE
 

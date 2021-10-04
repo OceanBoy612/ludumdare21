@@ -21,6 +21,7 @@ damping = 0.6
 max_speed = 160.0
 gravity = 30.0
 jump_strength = 500.0
+knockback_strength = 375.0
 knockback_decay = 0.55
 
 [node name="Shape" type="CollisionShape2D" parent="."]

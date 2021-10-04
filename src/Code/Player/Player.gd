@@ -23,6 +23,7 @@ export(float, 0, 1000, 25) var knockback_strength: float = 250
 export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
 export(float, 0, 1000, 25) var hurt_knockback_strength: float = 200
 export(float, 0, 20, 1) var max_health: float = 3
+export(float, 0, 3, 0.02) var i_frame_time: float = 1
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -115,6 +116,7 @@ func shoot_laser():
 			start_pos = $LaserRays/right.global_position
 			target_pos = $LaserRays/right.get_collision_point() if $LaserRays/right.is_colliding() else start_pos + Vector2(1000, 0)
 			$Sprite.play("Laser fire")
+			knockback += Vector2(-knockback_strength, 0)
 		"up":
 			start_pos = $LaserRays/up.global_position
 			target_pos = $LaserRays/up.get_collision_point() if $LaserRays/up.is_colliding() else start_pos + Vector2(0, -1000)
@@ -123,6 +125,7 @@ func shoot_laser():
 			start_pos = $LaserRays/left.global_position
 			target_pos = $LaserRays/left.get_collision_point() if $LaserRays/left.is_colliding() else start_pos + Vector2(-1000, 0)
 			$Sprite.play("Laser fire")
+			knockback += Vector2(knockback_strength, 0)
 	
 	las.init(start_pos, target_pos)
 	get_parent().add_child(las)
@@ -185,7 +188,7 @@ func damage(amt:float, dir:Vector2):
 	else:			emit_signal("health_changed")
 	knockback += dir * hurt_knockback_strength
 	immortal = true
-	yield(get_tree().create_timer(0.2), "timeout")
+	yield(get_tree().create_timer(i_frame_time), "timeout")
 	immortal = false
 
 

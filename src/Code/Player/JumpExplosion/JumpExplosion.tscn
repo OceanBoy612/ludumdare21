@@ -20,30 +20,42 @@ animation = "Idle"
 [node name="points" type="Node2D" parent="."]
 
 [node name="p1" type="Position2D" parent="points"]
-position = Vector2( -10.5613, 10.2272 )
+position = Vector2( -15.0158, 18.2453 )
 
 [node name="p2" type="Position2D" parent="points"]
-position = Vector2( -0.204636, 15.4613 )
+position = Vector2( 0.574905, 23.7021 )
 
 [node name="p3" type="Position2D" parent="points"]
-position = Vector2( 11.043, 10.3386 )
+position = Vector2( 15.7202, 17.1317 )
 
 [node name="p4" type="Position2D" parent="points"]
-position = Vector2( 15.6088, 0.093277 )
+position = Vector2( 24.2951, 0.204639 )
 
 [node name="p5" type="Position2D" parent="points"]
-position = Vector2( 11.4884, -10.4861 )
+position = Vector2( 17.1679, -16.8338 )
 
 [node name="p6" type="Position2D" parent="points"]
-position = Vector2( -0.0932693, -15.6088 )
+position = Vector2( 0.129456, -23.5155 )
 
 [node name="p7" type="Position2D" parent="points"]
-position = Vector2( -11.6749, -9.92934 )
+position = Vector2( -17.0203, -16.8338 )
 
 [node name="p8" type="Position2D" parent="points"]
-position = Vector2( -15.7954, 0.427357 )
+position = Vector2( -23.5908, 0.204632 )
 
 [node name="p9" type="Position2D" parent="points"]
 position = Vector2( 0.129456, 0.0932732 )
+
+[node name="p10" type="Position2D" parent="points"]
+position = Vector2( -8.66817, 7.55455 )
+
+[node name="p11" type="Position2D" parent="points"]
+position = Vector2( -9.33634, -8.59299 )
+
+[node name="p12" type="Position2D" parent="points"]
+position = Vector2( 9.37253, -8.59299 )
+
+[node name="p13" type="Position2D" parent="points"]
+position = Vector2( 9.26117, 7.55454 )
 
 [connection signal="body_entered" from="." to="." method="_on_JumpExplosion_body_entered"]

@@ -52,6 +52,7 @@ var is_dead = false
 var air_jump_counter = 0
 var input_lock = false
 var is_charging = false
+var is_charged = false
 var laser_dir = "right"
 
 
@@ -98,15 +99,21 @@ func charge_laser():
 			yield($Sprite, "animation_finished")
 			$Sprite.play("Laser up charge")
 	
+	if is_charging: is_charged = true
 
 
 func shoot_laser():
-	_set_charge(charge - shoot_cost)
-	var las = laser_tscn.instance()
-	
 	is_charging = false
 	$Sprite.flip_sprite = true
 	unfreeze_player()
+	
+	if not is_charged:
+		return 
+	
+	is_charged = false
+	
+	_set_charge(charge - shoot_cost)
+	var las = laser_tscn.instance()
 	
 	# figure out the end position - clamp laser to three directions
 	var start_pos: Vector2
@@ -170,7 +177,7 @@ func jump():
 
 func double_jump():
 	var expl = jump_expl_tscn.instance()
-	expl.global_position = global_position
+	expl.global_position = $aimer.global_position # global_position
 	get_parent().add_child(expl)
 	
 	vel.y = -jump_strength

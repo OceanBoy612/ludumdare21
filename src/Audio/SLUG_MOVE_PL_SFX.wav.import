@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SLUG_MOVE_PL_SFX.wav-6aa6ee999a18fa82f83c31fca3590b47.sample"
+
+[deps]
+
+source_file="res://Audio/SLUG_MOVE_PL_SFX.wav"
+dest_files=[ "res://.import/SLUG_MOVE_PL_SFX.wav-6aa6ee999a18fa82f83c31fca3590b47.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

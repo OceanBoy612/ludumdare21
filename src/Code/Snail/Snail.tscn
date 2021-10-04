@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Sprites/Monster Sprites/Snail_spriteframes.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://Code/Snail/Snail.gd" type="Script" id=2]
-[ext_resource path="res://Audio/SLUG_MOVE_PL_SFX.wav" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 14.396, 10 )
@@ -58,7 +57,3 @@ cast_to = Vector2( 3, 0 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 anims/flash = SubResource( 2 )
-
-[node name="SlimeMove" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 3 )
-volume_db = -26.252

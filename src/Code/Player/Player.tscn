@@ -1,17 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Code/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player Sprites/Player_spriteframes.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Code/Player/Sprite.gd" type="Script" id=3]
-[ext_resource path="res://Audio/FOOTSTEP2_PL_SFX.wav" type="AudioStream" id=4]
-[ext_resource path="res://Audio/FOOTSTEP1_PL_SFX.wav" type="AudioStream" id=5]
-[ext_resource path="res://Audio/SINGLE_SHOT_PL_SFX.wav" type="AudioStream" id=6]
-[ext_resource path="res://Audio/LASER_PL_SFX.wav" type="AudioStream" id=7]
-[ext_resource path="res://Audio/DEATH_PL_SFX.wav" type="AudioStream" id=8]
-[ext_resource path="res://Code/Audio/SpriteSound.gd" type="Script" id=9]
-[ext_resource path="res://Audio/JUMP_PL_SFX.wav" type="AudioStream" id=10]
-[ext_resource path="res://Audio/FLIP_PL_SFX.wav" type="AudioStream" id=11]
-[ext_resource path="res://Audio/LAND_PL_SFX.wav" type="AudioStream" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 7 )
@@ -72,59 +63,6 @@ frames = ExtResource( 2 )
 animation = "Idle"
 script = ExtResource( 3 )
 
-[node name="Foot1" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 5 )
-volume_db = -15.361
-script = ExtResource( 9 )
-animation_name = "Walk"
-frame = 1
-
-[node name="Foot2" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 4 )
-volume_db = -21.361
-script = ExtResource( 9 )
-animation_name = "Walk"
-frame = 3
-
-[node name="Laser" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 7 )
-volume_db = -5.0
-script = ExtResource( 9 )
-animation_name = "Laser fire"
-
-[node name="LaserTop" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 7 )
-volume_db = -5.0
-pitch_scale = 0.92
-script = ExtResource( 9 )
-animation_name = "Laser up fire"
-
-[node name="Death" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 8 )
-volume_db = -5.0
-script = ExtResource( 9 )
-animation_name = "Die"
-frame = 7
-
-[node name="Spin" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 11 )
-volume_db = -5.361
-script = ExtResource( 9 )
-animation_name = "Air spin"
-frame = 2
-
-[node name="Jump" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 10 )
-volume_db = -5.361
-script = ExtResource( 9 )
-animation_name = "Air spin"
-
-[node name="Land" type="AudioStreamPlayer2D" parent="Sprite"]
-stream = ExtResource( 12 )
-volume_db = -5.361
-script = ExtResource( 9 )
-animation_name = "Air fall"
-
 [node name="LaserRays" type="Node2D" parent="."]
 visible = false
 position = Vector2( 0, -8 )
@@ -159,7 +97,3 @@ shape = SubResource( 2 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 anims/I-frames = SubResource( 3 )
-
-[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 6 )
-volume_db = -2.019

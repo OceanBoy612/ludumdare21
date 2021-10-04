@@ -35,7 +35,6 @@ func _physics_process(delta):
 
 func turn():
 	scale.x *= -1
-	$SlimeMove.play()
 	pass
 
 

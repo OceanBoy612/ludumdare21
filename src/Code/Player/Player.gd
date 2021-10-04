@@ -165,7 +165,6 @@ func shoot_bullet():
 	knockback += Vector2(-1,0).rotated(bul.global_rotation) * knockback_strength
 	
 	emit_signal("shot")
-	$ShootSound.play()
 	
 	muzzle_flash() #MrGeko
 

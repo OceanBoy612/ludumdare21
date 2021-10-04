@@ -5,6 +5,7 @@ onready var player: Player = get_parent() as Player
 
 
 var in_air = false
+var flip_sprite = true
 
 
 func _ready():
@@ -16,7 +17,8 @@ func _ready():
 
 
 func _process(delta):
-	_handle_flipping()
+	if flip_sprite:
+		_handle_flipping()
 
 
 func _on_Player_shot():

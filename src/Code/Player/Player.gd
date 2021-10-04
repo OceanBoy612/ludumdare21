@@ -50,6 +50,8 @@ var health = 0 setget _set_health
 var is_dead = false
 var air_jump_counter = 0
 var input_lock = false
+var is_charging = false
+var laser_dir = "right"
 
 
 func _ready():
@@ -62,9 +64,8 @@ func _physics_process(delta):
 	$aimer.rotation = look_dir.angle()
 	
 	_apply_knockback()
-	_move_player()
-	
-	update()
+	if not is_charging:
+		_move_player()
 	
 
 func _input(event):
@@ -73,32 +74,55 @@ func _input(event):
 	if event.is_action_pressed("shoot") and event.is_pressed():
 		last_shoot_time = OS.get_system_time_msecs()
 		if _can_shoot_laser():
-			shoot_laser()
+			charge_laser()
+#			shoot_laser()
 		elif _can_shoot_bullet():
 			shoot_bullet()
-		
+	if event.is_action_released("shoot") and is_charging:
+		shoot_laser()
+
+
+func charge_laser():
+	freeze_player(20) # max amount of time?
+	is_charging = true
+	$Sprite.flip_sprite = false
+	laser_dir = _get_laser_dir()
+	match laser_dir:
+		"right", "left":
+			$Sprite.play("Laser windup")
+			yield($Sprite, "animation_finished")
+			$Sprite.play("Laser charge")
+		"up":
+			$Sprite.play("Laser up windup")
+			yield($Sprite, "animation_finished")
+			$Sprite.play("Laser up charge")
+	
+
 
 func shoot_laser():
 	_set_charge(charge - shoot_cost)
 	var las = laser_tscn.instance()
-#	las.global_position = $aimer/offset.global_position
-#	las.global_rotation = $aimer.global_rotation
+	
+	is_charging = false
+	$Sprite.flip_sprite = true
+	unfreeze_player()
 	
 	# figure out the end position - clamp laser to three directions
 	var start_pos: Vector2
 	var target_pos: Vector2
-	if $aimer.rotation_degrees >= -45 and $aimer.rotation_degrees <= 90:
-		start_pos = $LaserRays/right.global_position
-		target_pos = $LaserRays/right.get_collision_point() if $LaserRays/right.is_colliding() else start_pos + Vector2(1000, 0)
-	elif $aimer.rotation_degrees >= -135 and $aimer.rotation_degrees <= -45:
-		start_pos = $LaserRays/up.global_position
-		target_pos = $LaserRays/up.get_collision_point() if $LaserRays/up.is_colliding() else start_pos + Vector2(0, -1000)
-	elif $aimer.rotation_degrees <= -135 or $aimer.rotation_degrees >= 90:
-		start_pos = $LaserRays/left.global_position
-		target_pos = $LaserRays/left.get_collision_point() if $LaserRays/left.is_colliding() else start_pos + Vector2(-1000, 0)
-	else:
-		print("AAAAAAAAAAAAAAAAAAAAAA")
-	
+	match laser_dir:
+		"right":
+			start_pos = $LaserRays/right.global_position
+			target_pos = $LaserRays/right.get_collision_point() if $LaserRays/right.is_colliding() else start_pos + Vector2(1000, 0)
+			$Sprite.play("Laser fire")
+		"up":
+			start_pos = $LaserRays/up.global_position
+			target_pos = $LaserRays/up.get_collision_point() if $LaserRays/up.is_colliding() else start_pos + Vector2(0, -1000)
+			$Sprite.play("Laser up fire")
+		"left":
+			start_pos = $LaserRays/left.global_position
+			target_pos = $LaserRays/left.get_collision_point() if $LaserRays/left.is_colliding() else start_pos + Vector2(-1000, 0)
+			$Sprite.play("Laser fire")
 	
 	las.init(start_pos, target_pos)
 	get_parent().add_child(las)
@@ -111,12 +135,13 @@ func shoot_laser():
 	# freeze the player for 0.25 seconds
 	freeze_player(0.25)
 	
+	yield($Sprite, "animation_finished")
+	$Sprite.play("Idle")
+	
 #	muzzle_flash() #MrGeko
 
 
-func _draw():
-	var f = Control.new().get_font("default")
-	draw_string(f, Vector2(10,0), str($aimer.rotation_degrees))
+
 
 
 func shoot_bullet():
@@ -189,6 +214,21 @@ func freeze_player(time: float):
 	input_lock = true
 	yield(get_tree().create_timer(time), "timeout")
 	input_lock = false
+
+
+func unfreeze_player():
+	input_lock = false
+
+
+func _get_laser_dir() -> String:
+	if $aimer.rotation_degrees >= -45 and $aimer.rotation_degrees <= 90:
+		return "right"
+	elif $aimer.rotation_degrees >= -135 and $aimer.rotation_degrees <= -45:
+		return "up"
+	elif $aimer.rotation_degrees <= -135 or $aimer.rotation_degrees >= 90:
+		return "left"
+	else:
+		return "left"
 
 
 func _landed():

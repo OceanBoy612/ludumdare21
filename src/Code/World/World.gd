@@ -6,6 +6,7 @@ onready var player_tscn = preload("res://Code/Player/Player.tscn")
 
 
 func _ready():
+	curr_player.freeze_player(1.0)
 	connect_player()
 
 

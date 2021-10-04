@@ -12,6 +12,7 @@ func break_tile(impact_point: Vector2):
 	var cell_id = get_cellv(cell_coord)
 	
 	if cell_id in BREAKABLE_TILES:
+		$BreakSound.play()
 		set_cellv(cell_coord, -1)
 		
 #		var frag = Sprite.new()

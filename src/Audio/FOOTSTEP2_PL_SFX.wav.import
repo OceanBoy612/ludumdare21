@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FOOTSTEP2_PL_SFX.wav-efb48d5d64e957e6a4aadb88dbd7cb5c.sample"
+
+[deps]
+
+source_file="res://Audio/FOOTSTEP2_PL_SFX.wav"
+dest_files=[ "res://.import/FOOTSTEP2_PL_SFX.wav-efb48d5d64e957e6a4aadb88dbd7cb5c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

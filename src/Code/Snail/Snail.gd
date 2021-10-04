@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 
 export(float, 0, 1000, 20) var speed: float = 100
+export(int, 0, 10) var health: int = 8
 
 
 var move_dir: Vector2 = Vector2()
@@ -40,7 +41,10 @@ func can_turn():
 
 
 func hurt(): # get's called by the bullet on collision
-	queue_free()
+	health -= 1
+	$anim.play("flash")
+	if health <= 0:
+		queue_free()
 
 
 #func _draw():

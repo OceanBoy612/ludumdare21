@@ -191,6 +191,8 @@ func double_jump():
 func damage(amt:float, dir:Vector2):
 	if immortal: return 
 	
+	immortal = true
+	
 	_set_health(health - amt)
 	
 	if health <= 0:

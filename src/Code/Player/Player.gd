@@ -23,7 +23,7 @@ export(float, 0, 1000, 25) var knockback_strength: float = 250
 export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
 export(float, 0, 1000, 25) var hurt_knockback_strength: float = 200
 export(float, 0, 20, 1) var max_health: float = 3
-export(float, 0, 3, 0.02) var i_frame_time: float = 1
+export var immortal: bool = false
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -38,7 +38,6 @@ var look_dir: Vector2 = Vector2()
 var vel: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 
-var immortal = false
 var last_jump_time = 0
 var jump_buffer_msecs = 100
 var last_shoot_time = 0
@@ -188,15 +187,17 @@ func double_jump():
 
 
 func damage(amt:float, dir:Vector2):
-	if immortal:
-		return 
+	if immortal: return 
+	
 	_set_health(health - amt)
-	if health <= 0:	die()
-	else:			emit_signal("health_changed")
+	
+	if health <= 0:
+		die()
+		return
+	
+	$anim.play("I-frames")
 	knockback += dir * hurt_knockback_strength
-	immortal = true
-	yield(get_tree().create_timer(i_frame_time), "timeout")
-	immortal = false
+	emit_signal("health_changed")
 
 
 func die():

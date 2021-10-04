@@ -34,7 +34,7 @@ func _get_active_checkpoint() -> Node2D:
 	for c in checkpoints:
 		if c.active:
 			return c
-	return $SpawnPoint as Node2D
+	return $Checkpoints/SpawnPoint as Node2D
 
 
 func _on_player_shot():

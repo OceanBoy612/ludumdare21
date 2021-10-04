@@ -4,6 +4,8 @@ extends CanvasLayer
 var player: Player
 onready var tween: Tween = $Gauges/Tween
 
+onready var disperse_tscn = preload("res://Code/Effects/DisperseEffect.tscn")
+
 
 func set_player(p: Player):
 	player = p
@@ -18,10 +20,15 @@ func set_player(p: Player):
 func _on_player_charge_changed():
 	$Gauges/Power.max_value = 100
 	
+	if abs($Gauges/Power.value - player.charge) > 10:
+		var d = disperse_tscn.instance()
+		d.position = $Gauges/Health.rect_position + ($Gauges/Health.rect_size / 2)
+		$Gauges.add_child(d)
+	
 	tween.interpolate_property($Gauges/Power, "value", $Gauges/Power.value, player.charge, 
 			0.2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	tween.start()
-#	$Gauges/Power.value = player.charge
+	
 
 
 func _on_player_health_changed():
@@ -29,4 +36,9 @@ func _on_player_health_changed():
 	tween.interpolate_property($Gauges/Health, "value", $Gauges/Health.value, player.health, 
 			0.2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	tween.start()
+	
+	var d = disperse_tscn.instance()
+	d.position = $Gauges/Health.rect_position + ($Gauges/Health.rect_size / 2)
+	$Gauges.add_child(d)
+	
 	

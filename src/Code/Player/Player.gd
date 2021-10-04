@@ -23,6 +23,7 @@ export(float, 0, 1000, 25) var knockback_strength: float = 250
 export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
 export(float, 0, 1000, 25) var hurt_knockback_strength: float = 200
 export(float, 0, 20, 1) var max_health: float = 3
+export var immortal: bool = false
 
 
 onready var bullet_tscn = preload("res://Code/Player/Bullet/Bullet.tscn")
@@ -37,7 +38,6 @@ var look_dir: Vector2 = Vector2()
 var vel: Vector2 = Vector2()
 var knockback: Vector2 = Vector2()
 
-var immortal = false
 var last_jump_time = 0
 var jump_buffer_msecs = 100
 var last_shoot_time = 0
@@ -51,6 +51,7 @@ var is_dead = false
 var air_jump_counter = 0
 var input_lock = false
 var is_charging = false
+var is_charged = false
 var laser_dir = "right"
 
 
@@ -97,15 +98,21 @@ func charge_laser():
 			yield($Sprite, "animation_finished")
 			$Sprite.play("Laser up charge")
 	
+	if is_charging: is_charged = true
 
 
 func shoot_laser():
-	_set_charge(charge - shoot_cost)
-	var las = laser_tscn.instance()
-	
 	is_charging = false
 	$Sprite.flip_sprite = true
 	unfreeze_player()
+	
+	if not is_charged:
+		return 
+	
+	is_charged = false
+	
+	_set_charge(charge - shoot_cost)
+	var las = laser_tscn.instance()
 	
 	# figure out the end position - clamp laser to three directions
 	var start_pos: Vector2
@@ -115,6 +122,7 @@ func shoot_laser():
 			start_pos = $LaserRays/right.global_position
 			target_pos = $LaserRays/right.get_collision_point() if $LaserRays/right.is_colliding() else start_pos + Vector2(1000, 0)
 			$Sprite.play("Laser fire")
+			knockback += Vector2(-knockback_strength, 0)
 		"up":
 			start_pos = $LaserRays/up.global_position
 			target_pos = $LaserRays/up.get_collision_point() if $LaserRays/up.is_colliding() else start_pos + Vector2(0, -1000)
@@ -123,6 +131,7 @@ func shoot_laser():
 			start_pos = $LaserRays/left.global_position
 			target_pos = $LaserRays/left.get_collision_point() if $LaserRays/left.is_colliding() else start_pos + Vector2(-1000, 0)
 			$Sprite.play("Laser fire")
+			knockback += Vector2(knockback_strength, 0)
 	
 	las.init(start_pos, target_pos)
 	get_parent().add_child(las)
@@ -167,7 +176,7 @@ func jump():
 
 func double_jump():
 	var expl = jump_expl_tscn.instance()
-	expl.global_position = global_position
+	expl.global_position = $aimer.global_position # global_position
 	get_parent().add_child(expl)
 	
 	vel.y = -jump_strength
@@ -178,15 +187,17 @@ func double_jump():
 
 
 func damage(amt:float, dir:Vector2):
-	if immortal:
-		return 
+	if immortal: return 
+	
 	_set_health(health - amt)
-	if health <= 0:	die()
-	else:			emit_signal("health_changed")
+	
+	if health <= 0:
+		die()
+		return
+	
+	$anim.play("I-frames")
 	knockback += dir * hurt_knockback_strength
-	immortal = true
-	yield(get_tree().create_timer(0.2), "timeout")
-	immortal = false
+	emit_signal("health_changed")
 
 
 func die():

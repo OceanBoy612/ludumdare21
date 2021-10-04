@@ -6,6 +6,7 @@ onready var player_tscn = preload("res://Code/Player/Player.tscn")
 
 
 func _ready():
+	curr_player.freeze_player(1.0)
 	connect_player()
 
 
@@ -23,9 +24,17 @@ func connect_player():
 
 func _on_player_died():
 	curr_player = player_tscn.instance()
-	curr_player.global_position = $SpawnPoint.global_position
+	curr_player.global_position = _get_active_checkpoint().global_position
 	add_child_below_node($TileMap, curr_player)
 	connect_player()
+
+
+func _get_active_checkpoint() -> Node2D:
+	var checkpoints = get_tree().get_nodes_in_group("checkpoints")
+	for c in checkpoints:
+		if c.active:
+			return c
+	return $SpawnPoint as Node2D
 
 
 func _on_player_shot():

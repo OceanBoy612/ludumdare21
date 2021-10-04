@@ -1,8 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Code/Button/Button.gd" type="Script" id=1]
+[ext_resource path="res://Code/Audio/Button/Button.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Monster Sprites/Light_spriteframes.tres" type="SpriteFrames" id=2]
 [ext_resource path="res://Code/World/Tileset.tres" type="TileSet" id=4]
+
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 6.03106, 6.88495 )

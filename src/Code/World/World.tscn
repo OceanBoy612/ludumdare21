@@ -65,6 +65,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -64.0
 margin_right = 64.0
+step = 0.01
 value = 50.0
 texture_under = ExtResource( 9 )
 texture_progress = ExtResource( 7 )
@@ -85,6 +86,8 @@ fill_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Tween" type="Tween" parent="GUI/Gauges"]
 
 [node name="StartScreen" type="Control" parent="GUI"]
 visible = false

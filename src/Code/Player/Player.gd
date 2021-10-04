@@ -23,6 +23,7 @@ export(float, 0, 1000, 25) var knockback_strength: float = 250
 export(float, 0, 1, 0.05) var knockback_decay: float = 0.5
 export(float, 0, 1000, 25) var hurt_knockback_strength: float = 200
 export(float, 0, 20, 1) var max_health: float = 3
+export(float, 0, 100, 1) var charge_on_jump: float = 20
 export var immortal: bool = false
 
 
@@ -169,6 +170,7 @@ func shoot_bullet():
 
 
 func jump():
+	_set_charge(charge + charge_on_jump)
 	vel.y = -jump_strength
 	last_jump_time = 0
 	emit_signal("jumped")
@@ -275,6 +277,8 @@ func _move_player() -> void:
 	
 	if is_on_floor():
 		last_on_floor_time = OS.get_system_time_msecs()
+	if not is_on_floor(): # increase charge while in air
+		_set_charge(charge + 1)
 	
 	if _can_jump():
 		jump()

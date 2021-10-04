@@ -2,6 +2,7 @@ extends CanvasLayer
 
 
 var player: Player
+onready var tween: Tween = $Gauges/Tween
 
 
 func set_player(p: Player):
@@ -16,10 +17,16 @@ func set_player(p: Player):
 
 func _on_player_charge_changed():
 	$Gauges/Power.max_value = 100
-	$Gauges/Power.value = player.charge
+	
+	tween.interpolate_property($Gauges/Power, "value", $Gauges/Power.value, player.charge, 
+			0.2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.start()
+#	$Gauges/Power.value = player.charge
 
 
 func _on_player_health_changed():
 	$Gauges/Health.max_value = player.max_health
-	$Gauges/Health.value = player.health
+	tween.interpolate_property($Gauges/Health, "value", $Gauges/Health.value, player.health, 
+			0.2, Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.start()
 	

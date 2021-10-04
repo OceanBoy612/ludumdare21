@@ -10,6 +10,9 @@ var up_dir: Vector2 = Vector2()
 var damage: float = 1.0
 
 
+onready var med_expl_tscn = preload("res://Code/Effects/ExplosionEffectMedium.tscn")
+
+
 func _ready():
 	add_to_group("enemies")
 	$Sprite.play("Walk")
@@ -44,6 +47,10 @@ func hurt(): # get's called by the bullet on collision
 	health -= 1
 	$anim.play("flash")
 	if health <= 0:
+		var expl = med_expl_tscn.instance()
+		expl.global_position = global_position
+		get_parent().add_child(expl)
+		
 		queue_free()
 
 

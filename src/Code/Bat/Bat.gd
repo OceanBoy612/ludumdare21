@@ -16,6 +16,7 @@ var player_node: Player
 
 
 onready var bullet_tscn = preload("res://Code/Bat/BadBullet/BadBullet.tscn")
+onready var med_expl_tscn = preload("res://Code/Effects/ExplosionEffectMedium.tscn")
 
 
 func _ready():
@@ -78,4 +79,8 @@ func hurt(): # get's called by the bullet on collision
 	health -= 1
 	$anim.play("flash")
 	if health <= 0:
+		var expl = med_expl_tscn.instance()
+		expl.global_position = global_position
+		get_parent().add_child(expl)
+		
 		queue_free()

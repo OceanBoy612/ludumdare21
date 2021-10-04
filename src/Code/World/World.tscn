@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Code/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Code/World/World.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Code/Bat/Bat.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Code/Checkpoint/Checkpoint.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Code/World/StartScreen.gd" type="Script" id=15]
+[ext_resource path="res://Sprites/Pipes.png" type="Texture" id=16]
 [ext_resource path="res://Sprites/Sign.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
@@ -43,6 +44,100 @@ tracks/1/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+
+[sub_resource type="TileSet" id=2]
+0/name = "Pipes.png 0"
+0/texture = ExtResource( 16 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 1
+0/autotile/bitmask_mode = 1
+0/autotile/bitmask_flags = [  ]
+0/autotile/icon_coordinate = Vector2( 0, 0 )
+0/autotile/tile_size = Vector2( 16, 16 )
+0/autotile/spacing = 0
+0/autotile/occluder_map = [  ]
+0/autotile/navpoly_map = [  ]
+0/autotile/priority_map = [  ]
+0/autotile/z_index_map = [  ]
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "Pipes.png 1"
+1/texture = ExtResource( 16 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 64, 64 )
+1/tile_mode = 1
+1/autotile/bitmask_mode = 0
+1/autotile/bitmask_flags = [  ]
+1/autotile/icon_coordinate = Vector2( 0, 0 )
+1/autotile/tile_size = Vector2( 32, 32 )
+1/autotile/spacing = 0
+1/autotile/occluder_map = [  ]
+1/autotile/navpoly_map = [  ]
+1/autotile/priority_map = [  ]
+1/autotile/z_index_map = [  ]
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "Pipes.png 2"
+2/texture = ExtResource( 16 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 0, 0, 64, 64 )
+2/tile_mode = 1
+2/autotile/bitmask_mode = 1
+2/autotile/bitmask_flags = [ Vector2( 0, 0 ), 176, Vector2( 0, 1 ), 146, Vector2( 0, 2 ), 50, Vector2( 0, 3 ), 154, Vector2( 1, 0 ), 56, Vector2( 1, 1 ), 16, Vector2( 1, 2 ), 56, Vector2( 1, 3 ), 58, Vector2( 2, 0 ), 152, Vector2( 2, 1 ), 146, Vector2( 2, 2 ), 26, Vector2( 2, 3 ), 184, Vector2( 3, 0 ), 128, Vector2( 3, 1 ), 2, Vector2( 3, 2 ), 186, Vector2( 3, 3 ), 178 ]
+2/autotile/icon_coordinate = Vector2( 0, 0 )
+2/autotile/tile_size = Vector2( 16, 16 )
+2/autotile/spacing = 0
+2/autotile/occluder_map = [  ]
+2/autotile/navpoly_map = [  ]
+2/autotile/priority_map = [  ]
+2/autotile/z_index_map = [  ]
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+3/name = "Pipes.png 3"
+3/texture = ExtResource( 16 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 48, 32, 16, 16 )
+3/tile_mode = 1
+3/autotile/bitmask_mode = 0
+3/autotile/bitmask_flags = [  ]
+3/autotile/icon_coordinate = Vector2( 0, 0 )
+3/autotile/tile_size = Vector2( 16, 16 )
+3/autotile/spacing = 0
+3/autotile/occluder_map = [  ]
+3/autotile/navpoly_map = [  ]
+3/autotile/priority_map = [  ]
+3/autotile/z_index_map = [  ]
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
@@ -119,6 +214,12 @@ script = ExtResource( 4 )
 decay = 2.0
 max_offset = Vector2( 20, 15 )
 target = NodePath("../Player")
+
+[node name="Background" type="TileMap" parent="."]
+tile_set = SubResource( 2 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -851946, 2, 0, -786413, 2, 0, -786410, 2, 65538, -786385, 2, 0, -720877, 2, 196611, -720876, 2, 1, -720875, 2, 131073, -720874, 2, 131074, -720853, 2, 0, -720852, 2, 1, -720851, 2, 196610, -720850, 2, 131073, -720849, 2, 131074, -655341, 2, 65538, -655317, 2, 65538, -655315, 2, 65536, -589808, 2, 0, -589807, 2, 131073, -589806, 2, 1, -589805, 2, 131074, -589781, 2, 65536, -589779, 2, 65538, -524245, 2, 65538, -524243, 2, 131072, -524242, 2, 1, -524241, 2, 131073, -524240, 2, 1, -524239, 2, 131073, -524238, 2, 0, -458713, 2, 65537, -458709, 2, 0, -327670, 2, 65537, -131056, 0, 0, -65520, 1, 0, 18, 2, 0, 19, 2, 0, 65554, 2, 65538, 65598, 2, 65537, 131090, 2, 131072, 131091, 2, 1, 131092, 2, 131073, 131093, 2, 131073, 131094, 2, 131073, 131095, 2, 0, 131110, 2, 0, 196646, 2, 65538, 262182, 2, 65538, 262201, 2, 0, 327718, 2, 131072, 327719, 2, 1, 327720, 2, 2, 327737, 2, 65538, 393256, 2, 131072, 393257, 2, 196610, 393258, 2, 1, 393259, 2, 0, 393273, 2, 131072, 393274, 2, 1, 393275, 2, 131073, 393276, 2, 131073, 393277, 2, 0, 458780, 2, 65537, 458793, 2, 65538, 524329, 2, 65538, 589830, 2, 0, 589831, 2, 1, 589832, 2, 2, 589834, 2, 65537, 589865, 2, 131072, 589866, 2, 1, 589867, 2, 0, 655368, 2, 65538, 720904, 2, 65538, 786440, 2, 0 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 5 )

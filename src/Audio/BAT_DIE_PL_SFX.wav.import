@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BAT_DIE_PL_SFX.wav-b7a9cb47e627e83f6895c1b179549407.sample"
+
+[deps]
+
+source_file="res://Audio/BAT_DIE_PL_SFX.wav"
+dest_files=[ "res://.import/BAT_DIE_PL_SFX.wav-b7a9cb47e627e83f6895c1b179549407.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

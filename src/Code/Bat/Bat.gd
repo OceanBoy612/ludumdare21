@@ -77,9 +77,9 @@ func can_turn():
 func hurt(): # get's called by the bullet on collision
 	health -= 1
 	$anim.play("flash")
+	$BatDie.play()
 	if health <= 0:
 		var expl = large_expl_tscn.instance()
 		expl.global_position = global_position
 		get_parent().add_child(expl)
-		
 		queue_free()

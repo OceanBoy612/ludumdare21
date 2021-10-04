@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SLUG_DIE_PL_SFX.wav-4ce893fdc2e9526b5e4ad71d9cfb8113.sample"
+
+[deps]
+
+source_file="res://Audio/SLUG_DIE_PL_SFX.wav"
+dest_files=[ "res://.import/SLUG_DIE_PL_SFX.wav-4ce893fdc2e9526b5e4ad71d9cfb8113.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

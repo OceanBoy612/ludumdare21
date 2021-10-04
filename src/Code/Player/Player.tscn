@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Code/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/Player Sprites/Player_spriteframes.tres" type="SpriteFrames" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Audio/JUMP_PL_SFX.wav" type="AudioStream" id=10]
 [ext_resource path="res://Audio/FLIP_PL_SFX.wav" type="AudioStream" id=11]
 [ext_resource path="res://Audio/LAND_PL_SFX.wav" type="AudioStream" id=12]
+[ext_resource path="res://Audio/DAMAGE_PL_SFX.wav" type="AudioStream" id=13]
+[ext_resource path="res://Audio/EXPLODE_PL_SFX.wav" type="AudioStream" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 7 )
@@ -163,3 +165,11 @@ anims/I-frames = SubResource( 3 )
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 volume_db = -2.019
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+volume_db = -9.087
+
+[node name="ExplodeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+volume_db = -17.165

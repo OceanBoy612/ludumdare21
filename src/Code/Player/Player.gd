@@ -181,7 +181,7 @@ func double_jump():
 	var expl = jump_expl_tscn.instance()
 	expl.global_position = $aimer.global_position # global_position
 	get_parent().add_child(expl)
-	
+	$ExplodeSound.play()
 	vel.y = -jump_strength
 	last_jump_time = 0
 	air_jump_counter += 1
@@ -202,6 +202,7 @@ func damage(amt:float, dir:Vector2):
 	
 	$anim.play("I-frames")
 	knockback += dir * hurt_knockback_strength
+	$HurtSound.play()
 	emit_signal("health_changed")
 
 
